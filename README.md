@@ -28,8 +28,6 @@ Como esses sistemas operam **24/7**, exige-se:
 - **Atuadores**:  
   - 🚨 `Buzzer` (alertas sonoros)  
   - 🎨 `LED RGB` (feedback visual)  
+# Diagrama de Comunicação
+![Diagrama de Comunicação](https://github.com/user-attachments/assets/185a8113-627d-4528-9dbe-139b13974f06)
 
-## Implementação  
-1. **Configuração do Zabbix**:  
-   - Criação de hosts/itens para cada sensor  
-   - Definição de triggers (ex.: `{ESP32:temp.last()} > 30°C`)  
