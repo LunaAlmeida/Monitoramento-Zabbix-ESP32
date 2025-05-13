@@ -33,7 +33,7 @@ Como esses sistemas operam **24/7**, exige-se:
 
 # Materiais e métodos
 Nesta seção será descrito cada um dos componentes utilizados no projeto. Na página de explicação de cada ferramenta, é possível encontrar mais informações e tutoriais sobre como utilizá-las.
-- [**ESP32**](): microcontrolador acessível, com Wi-Fi, Bluetooth, dual-core e ampla versatilidade para IoT e projetos eletrônicos;
+- [**ESP32**](https://github.com/LunaAlmeida/Monitoramento-Zabbix-ESP32/tree/main/Componentes/Esp32): microcontrolador acessível, com Wi-Fi, Bluetooth, dual-core e ampla versatilidade para IoT e projetos eletrônicos;
 - [**Arduino Shield K596**](): placa de expansão que adiciona recursos específicos como comunicação, sensores ou atuadores;
 - [**MQTT**](): protocolo de comunicação leve e eficiente, baseado em publish/subscribe, ideal para IoT com baixo consumo de banda e recursos;
 - [**Zabbix**](): solução de monitoramento de rede, servidores e aplicações em tempo real, com alertas, gráficos e alta escalabilidade;
