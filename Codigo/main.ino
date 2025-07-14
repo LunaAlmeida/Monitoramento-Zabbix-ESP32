@@ -49,30 +49,19 @@ int shireDuracao[] = { 250, 125, 125, 250, 250, 250, 250, 125, 125, 250, 250, 12
 int mordorNotas[] = { 220, 196, 165, 220, 196, 165, 220, 196, 165, 247, 220, 196, 165 };
 int mordorDuracao[] = { 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500 };
 
-const char* ssid = "Luna";
-const char* password = "qtsi8070";
+const char* ssid = "nome da sua rede";
+const char* password = "senha da sua rede";
 
-const char* mqtt_server = "10.144.0.182";
+const char* mqtt_server = "número de IP do host";
 const int mqtt_port = 1883;
-const char*  mqtt_user = "zabbix";
-const char* mqtt_password = "zabbix";
+const char*  mqtt_user = "seu usuário do broker";
+const char* mqtt_password = "sua senha do broker";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-#define statusTopic "sensores/HYM302"
+#define statusTopic "sensores/HYM302/dados"
 
-#define temp1Topic statusTopic "/temperaturaDHT11"
-#define temp2Topic statusTopic "/temperaturaLM35"
-#define humTopic statusTopic "/umidade"
-#define luzTopic statusTopic "/luz"
-#define ledAzulTopic statusTopic "/ledAzul"
-#define ledVermelhoTopic statusTopic "/ledVermelho"
-#define potTopic statusTopic "/potenciometro"
-#define receptorIRTopic statusTopic "/receptorIR"
-#define botao1Topic statusTopic "/botao1"
-#define botao2Topic statusTopic "/botao2"
-#define redeTopic statusTopic "/rssi"
 
 void setup_wifi()
 {
@@ -182,12 +171,12 @@ void loop() {
 
   client.loop();
 
-  StaticJsonDocument<256> doc;
-  doc["rssi"] = WiFi.RSSI();
+  //StaticJsonDocument<256> doc;
+  String payload = "{";
 // ------- BUTTONS -------
 
   button1State = digitalRead(button1Pin);
-  doc["button_1"] = button1State;
+  
 
   int redLedStatus = 0;
   int blueLedStatus = 0;
@@ -200,11 +189,12 @@ void loop() {
     
     digitalWrite(redLed, LOW);
   }
-  doc["Led_vermelho"] = redLedStatus;
+  payload += "\"Led_vermelho\":" + String(redLedStatus) + ",";
+  payload += "\"botao_1\":" + String(button1State) + ",";
 
   button2State = digitalRead(button2Pin);
-  doc["button_2"] = button2State;
   
+  payload += "\"botao_2\":" + String(button2State) + ",";
   if(button2State == LOW){
     digitalWrite(blueLed, HIGH);
     blueLedStatus = 1;
@@ -212,7 +202,7 @@ void loop() {
     
     digitalWrite(blueLed, LOW);
   }
-  doc["Led_azul"] = blueLedStatus;
+  payload += "\"Led_azul\":" + String(blueLedStatus) + ",";
 
 // ------- DHT11 -------
   Serial.println("\n");
@@ -221,10 +211,10 @@ void loop() {
   Serial.println("Leitura do sensor DHT11: ");
 
   float umidade = dht.readHumidity();
-  doc["humidity"] = umidade;
+  
 
   float temperatura = dht.readTemperature();
-  doc["temp_DHT11"] = temperatura;
+  
 
   if(isnan(umidade) || isnan(temperatura))
   {
@@ -236,17 +226,19 @@ void loop() {
   Serial.print(umidade);
   Serial.println("%");
 
+  payload += "\"umidade\":" + String(umidade) + ",";
+
   Serial.print("Temperatura: ");
   Serial.print(temperatura);
   Serial.println("°C");
   Serial.println();
 
+  payload += "\"temp_DHT11\":" + String(temperatura) + ",";
 // ------- POTENTIOMETER -------
 
   int potValue = analogRead(potPin);
   int transitionSpeed = map(potValue, 0, 4095, 5, 100);
-  doc["potentiometer"] = transitionSpeed;
-
+  payload += "\"potenciometro\":" + String(transitionSpeed) + ",";
   int RGBSStatus = 0;
 // ------- LED RGB -------
   for(int i = 0;  i < 256; i++) {
@@ -266,7 +258,6 @@ void loop() {
     delay(transitionSpeed);
     checkPotentiometer();
   }
-  doc["RGB"] = RGBSStatus;
 
 // ------- LM35 -------
   float tempC;
@@ -275,7 +266,7 @@ void loop() {
   tempC = (analogRead(tempPin) * 3.3) / 4095.0;
   delay(10);
   temperaturaLM = tempC * 100.0;
-  doc["temp_LM35"] = temperaturaLM;
+  payload += "\"temp_LM35\":" + String(temperaturaLM) + ",";
   Serial.print("Temperatura LM35 - ");
   Serial.print(temperaturaLM, 1);
   Serial.println(" °C");
@@ -283,7 +274,7 @@ void loop() {
 
 // ------- LDR e BUZZER-------
   float ldrValue = analogRead(LDRPin);
-  doc["Luminosidade"] = ldrValue;
+  
 
   float voltage = ldrValue * (3.3 / 4095.0);
 
@@ -295,16 +286,18 @@ void loop() {
 
   delay(1000);
 
+  String musica;
   if (ldrValue < 1500) { 
     Serial.println("Escuroo...");
     melodia(mordorNotas, mordorDuracao, sizeof(mordorNotas) / sizeof(int));
-    doc["musica"] = "mordor";
+    musica = "mordor";
     
   } else {
     Serial.println("Claroo!!!");
     melodia(shireNotas, shireDuracao, sizeof(shireNotas) / sizeof(int));
-    doc["musica"] = "shire";
+    musica = "shire";
   }
+  payload += "\"tema\":\"" + musica + "\",";
   delay(5000);
 
 // -------IR RECEIVER-------
@@ -312,28 +305,29 @@ void loop() {
   {
     Serial.print("Protocolo: ");
     Serial.print(getProtocolString(IrReceiver.decodedIRData.protocol));
-    doc["protocolo"] = getProtocolString(IrReceiver.decodedIRData.protocol);
+    payload += String("\"protocolo_IR\":\"") + String(getProtocolString(IrReceiver.decodedIRData.protocol)) + "\",";
     Serial.print(", Valor: ");
     Serial.println(IrReceiver.decodedIRData.command, HEX);
     int comando = IrReceiver.decodedIRData.command;
+    payload += "\"comando\":" + String(comando) + ",";
     Serial.print("Bits: ");
     Serial.println(IrReceiver.decodedIRData.numberOfBits);
-    doc["comando"] = comando;
+    
 
     IrReceiver.resume();
   }
+  payload += "\"rssi\":" + String(WiFi.RSSI());
+  payload += "}";
 
-  char jsonBuffer[256];
-  serializeJson(doc, jsonBuffer);
-  client.publish(temp1Topic, jsonBuffer);
+  client.publish(statusTopic, payload.c_str());
 
   if (client.state()) {
     Serial.print("Publish failed, state=");
-    
     Serial.println("Publish failed!");
   }else {
     Serial.println("-----------------------------------------------------"); 
     Serial.println(client.state()); 
+    Serial.println("Dados enviados: " + payload);
     Serial.println("-----------------------------------------------------"); 
   }
 
