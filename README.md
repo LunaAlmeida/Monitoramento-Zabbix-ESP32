@@ -38,3 +38,7 @@ Nesta seção será descrito cada um dos componentes utilizados no projeto. Na p
 - [**MQTT-Mosquitto**](https://github.com/LunaAlmeida/Monitoramento-Zabbix-ESP32/tree/main/Componentes): protocolo de comunicação leve e eficiente, baseado em publish/subscribe, ideal para IoT com baixo consumo de banda e recursos;
 - [**Zabbix**](): solução de monitoramento de rede, servidores e aplicações em tempo real, com alertas, gráficos e alta escalabilidade;
 - [**Grafana**](): plataforma de visualização e análise de dados em tempo real, com dashboards interativos e suporte a múltiplas fontes de dados.
+
+  # Diagrama dos componentes
+  O diagrama abaixo define a configuração física utilizada e a interconexão dos componentes do projeto:
+  ![Diagrama do Circuito](https://github.com/user-attachments/assets/dc7d0296-dc59-4293-9770-f92264afc933)
