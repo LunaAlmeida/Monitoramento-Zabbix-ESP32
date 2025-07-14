@@ -99,8 +99,8 @@ Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conte
    - Crie um arquivo de senhas: `sudo mosquitto_passwd -c /etc/mosquitto/passwd seu_usuário`, após esse comando aparecerá o campo para adicionar a senha do seu broker;
    - Em `sudo nano /etc/mosquitto/mosquitto.conf` tenha a seguinte configuração:
    ![Config MQTT](https://github.com/user-attachments/assets/c1fbf76d-aae8-4569-b997-fc979df14902)
-  - Reinicie o MQTT;
-  - Pode ocorrer um erro com o firewall na porta 1883, caso ocorra, utilize `sudo ufw allow 1883`.
+    - Reinicie o MQTT;
+    - Pode ocorrer um erro com o firewall na porta 1883, caso ocorra, utilize `sudo ufw allow 1883`.
 
    
      
