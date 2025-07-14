@@ -94,7 +94,7 @@ Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conte
    - IRremote by shirriff, z3tO, ArminJo;
    - PubSubClient by Nick O'Leary.
   
-   # Configuração do MQTT
+  # Configuração do MQTT
    - Instale o MQTT;
    - Crie um arquivo de senhas: `sudo mosquitto_passwd -c /etc/mosquitto/passwd seu_usuário`, após esse comando aparecerá o campo para adicionar a senha do seu broker;
    - Em `sudo nano /etc/mosquitto/mosquitto.conf` tenha a seguinte configuração:
@@ -102,5 +102,14 @@ Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conte
     - Reinicie o MQTT;
     - Pode ocorrer um erro com o firewall na porta 1883, caso ocorra, utilize `sudo ufw allow 1883`.
 
-   
-     
+  # Configuração do Zabbix
+  Siga os passos para configurar o banco de dados MariaDB e o Zabbix:
+  ```
+  sudo apt update
+  sudo apt install mariadb-server mariadb-client mariadb-backup
+  systemctl enable --now mariadb
+  sudo mariadb-secure-installation
+  sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+  ```
+<img width="810" height="274" alt="image" src="https://github.com/user-attachments/assets/332df2c7-5a0a-47af-ad03-ec4b4bff9747" />
+
