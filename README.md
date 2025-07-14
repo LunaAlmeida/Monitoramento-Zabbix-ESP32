@@ -57,3 +57,21 @@ Nesta seção será descrito cada um dos componentes utilizados no projeto. Na p
 | A1 (LDR)                         | GPIO 32               |
 | A2 (LM35)                        | GPIO 35               |
 
+# Configuração de Ambiente Local
+
+Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conter informações sensíveis como SSID e senha da rede WiFi, além da URL do servidor:
+1. Navegue até a pasta `Codigo` do seu projeto.
+2. Modifique as seguintes linhas no arquivo `main.ino`:
+   
+   ```
+   const char* ssid = "nome da sua rede"; 
+   const char* password = "senha da sua rede";
+   const char* mqtt_server = "Endereço de IP do Host";
+
+   const char*  mqtt_user = "seu usuário do broker";
+   const char* mqtt_password = "sua senha do broker";
+   ```
+   # Configuração do Arduino IDE
+   - Instale o Arduino IDE
+   ## Bibliotecas necessárias
+   -  
