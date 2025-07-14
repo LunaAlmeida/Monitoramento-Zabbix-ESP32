@@ -59,6 +59,16 @@ Nesta seção será descrito cada um dos componentes utilizados no projeto. Na p
 
 # Configuração de Ambiente Local
 
+Pré-requisitos:
+
+➔ Sistema Linux Ubuntu Server 24.04 LTS;
+
+➔ Zabbix 7.0 LTS;
+
+➔ 2 CPU;
+
+➔ 4GB RAM.
+
 Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conter informações sensíveis como SSID e senha da rede WiFi, além da URL do servidor:
 1. Navegue até a pasta `Codigo` do seu projeto.
 2. Modifique as seguintes linhas no arquivo `main.ino`:
@@ -85,6 +95,12 @@ Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conte
    - PubSubClient by Nick O'Leary.
   
    # Configuração do MQTT
-   
+   - Instale o MQTT;
+   - Crie um arquivo de senhas: `sudo mosquitto_passwd -c /etc/mosquitto/passwd seu_usuário`, após esse comando aparecerá o campo para adicionar a senha do seu broker;
+   - Em `sudo nano /etc/mosquitto/mosquitto.conf` tenha a seguinte configuração:
+   ![Config MQTT](https://github.com/user-attachments/assets/c1fbf76d-aae8-4569-b997-fc979df14902)
+  - Reinicie o MQTT;
+  - Pode ocorrer um erro com o firewall na porta 1883, caso ocorra, utilize `sudo ufw allow 1883`.
+
    
      
