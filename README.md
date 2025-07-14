@@ -72,6 +72,19 @@ Para configurar o ambiente local, siga os passos abaixo. Este arquivo deve conte
    const char* mqtt_password = "sua senha do broker";
    ```
    # Configuração do Arduino IDE
-   - Instale o Arduino IDE
+   - Instale o Arduino IDE.
+   - Acesse: Arquivo → Preferências. No campo URLs de gerenciador adicional de placas adicone a seguinte URL: `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
+   - Na aba Ferramentas no campo Placa escolha `ESP32 DEV Module`;
+   - Ainda em Ferramentas adicione a porta em que está conectado o ESP32 no campo Porta.
+     
    ## Bibliotecas necessárias
-   -  
+   - Adafruit Unified Sensor by Adafruit;
+   - Arduinojson by Benoit Blanchon;
+   - DHT sensor library by Adafruit;
+   - IRremote by shirriff, z3tO, ArminJo;
+   - PubSubClient by Nick O'Leary.
+  
+   # Configuração do MQTT
+   
+   
+     
