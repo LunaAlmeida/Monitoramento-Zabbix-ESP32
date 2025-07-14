@@ -42,3 +42,18 @@ Nesta seção será descrito cada um dos componentes utilizados no projeto. Na p
   # Diagrama dos componentes
   O diagrama abaixo define a configuração física utilizada e a interconexão dos componentes do projeto:
   ![Diagrama do Circuito](https://github.com/user-attachments/assets/dc7d0296-dc59-4293-9770-f92264afc933)
+
+| Pino no HY-M302 (componente)     | Pino no ESP32         |
+| -------------------------------- | --------------------- |
+| D4 (DHT 11)                      | GPIO 19               |
+| D2 (Botão 1)                     | GPIO 39               |
+| D3 (Botão 2)                     | GPIO 36               |
+| D13 (Led Azul)                   | GPIO 13               |
+| D12 (Led Vermelho)               | GPIO 12               |
+| D5 (Buzzer)                      | GPIO 15               |
+| D6 (Receptor IR)                 | GPIO 33               |
+| D9, D10, D11 (Led RGB)           | GPIO 23, 22 e 21      |
+| A0 (Potenciômetro)               | GPIO 34               |
+| A1 (LDR)                         | GPIO 32               |
+| A2 (LM35)                        | GPIO 35               |
+
